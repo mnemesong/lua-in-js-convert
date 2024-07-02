@@ -1,0 +1,22 @@
+{
+  "name": "lua-in-js-convert",
+  "version": "0.0.1",
+  "description": ".",
+  "main": "js/src/index.js",
+  "scripts": {
+    "tsc": "tsc",
+    "test": "mocha ./js/test/**/*.test.js"
+  },
+  "keywords": [],
+  "author": ".",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^9.*",
+    "typescript": "^4.9.4",
+    "@types/mocha": "^9.*",
+    "@types/node": "^13.*"
+  },
+  "dependencies": {
+    "lua-in-js": "^2.2.4"
+  }
+}
