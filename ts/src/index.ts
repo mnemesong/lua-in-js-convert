@@ -9,7 +9,10 @@ export function luaToJs(entity: any): any {
     if (typeof entity === "object") {
         if (entity instanceof luainjs.Table) {
             if (Object.keys(entity.strValues).length > 0) {
-                const result = entity.strValues
+                const result = {}
+                Object.keys(entity.strValues).forEach(k => {
+                    result[k] = luaToJs(entity.strValues[k])
+                })
                 entity.keys.forEach((k) => {
                     result[k] = null
                 })

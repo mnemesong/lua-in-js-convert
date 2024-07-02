@@ -57,9 +57,14 @@ function execLua(script) {
         assert.deepStrictEqual(result, { a: 11, b: 421, 12: "asd" });
     });
     (0, mocha_1.it)("test ordered object", function () {
-        var given = execLua("return {111, a=11, b=421, \"dasf\"}");
+        var given = execLua("return {111, a={x=12, desc=\"is description\"}, b=421, \"dasf\"}");
         var result = (0, src_1.luaToJs)(given);
-        assert.deepStrictEqual(result, { 1: 111, a: 11, b: 421, 2: "dasf" });
+        assert.deepStrictEqual(result, {
+            1: 111,
+            a: { x: 12, desc: "is description" },
+            b: 421,
+            2: "dasf"
+        });
     });
 });
 function execLuaF(fun) {
@@ -98,6 +103,11 @@ function luaReturn(v) {
     });
     (0, mocha_1.it)("test object", function () {
         var given = { 1: 111, a: 11, b: 421, 2: "dasf" };
+        var result = (0, src_1.luaToJs)(luaReturn((0, src_1.jsToLua)(given)));
+        assert.deepStrictEqual(result, given);
+    });
+    (0, mocha_1.it)("test included object", function () {
+        var given = { 1: 111, a: 11, b: 421, 2: [12, "aboba", null] };
         var result = (0, src_1.luaToJs)(luaReturn((0, src_1.jsToLua)(given)));
         assert.deepStrictEqual(result, given);
     });

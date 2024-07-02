@@ -25,11 +25,19 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.jsToLua = exports.luaToJs = void 0;
 var luainjs = __importStar(require("lua-in-js"));
+/**
+ * Converts any lua entity to js entity
+ * @param entity - Lua entity
+ * @returns js entity
+ */
 function luaToJs(entity) {
     if (typeof entity === "object") {
         if (entity instanceof luainjs.Table) {
             if (Object.keys(entity.strValues).length > 0) {
-                var result_1 = entity.strValues;
+                var result_1 = {};
+                Object.keys(entity.strValues).forEach(function (k) {
+                    result_1[k] = luaToJs(entity.strValues[k]);
+                });
                 entity.keys.forEach(function (k) {
                     result_1[k] = null;
                 });
@@ -57,6 +65,11 @@ function luaToJs(entity) {
     return entity;
 }
 exports.luaToJs = luaToJs;
+/**
+ * Converts Js entity to Lua entity
+ * @param entity  - any js entity
+ * @returns - match lua entity
+ */
 function jsToLua(entity) {
     if (Array.isArray(entity)) {
         return new luainjs.Table(entity.map(function (v) { return jsToLua(v); }));

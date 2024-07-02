@@ -35,9 +35,14 @@ describe("test luaToJs", () => {
         assert.deepStrictEqual(result, { a: 11, b: 421, 12: "asd" })
     })
     it("test ordered object", () => {
-        const given = execLua(`return {111, a=11, b=421, "dasf"}`)
+        const given = execLua(`return {111, a={x=12, desc="is description"}, b=421, "dasf"}`)
         const result = luaToJs(given)
-        assert.deepStrictEqual(result, { 1: 111, a: 11, b: 421, 2: "dasf" })
+        assert.deepStrictEqual(result, {
+            1: 111,
+            a: { x: 12, desc: "is description" },
+            b: 421,
+            2: "dasf"
+        })
     })
 })
 
@@ -95,6 +100,11 @@ describe("test jsToLua", () => {
     })
     it("test object", () => {
         const given = { 1: 111, a: 11, b: 421, 2: "dasf" }
+        const result = luaToJs(luaReturn(jsToLua(given)))
+        assert.deepStrictEqual(result, given)
+    })
+    it("test included object", () => {
+        const given = { 1: 111, a: 11, b: 421, 2: [12, "aboba", null] }
         const result = luaToJs(luaReturn(jsToLua(given)))
         assert.deepStrictEqual(result, given)
     })

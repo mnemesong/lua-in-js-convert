@@ -1,6 +1,6 @@
 {
   "name": "lua-in-js-convert",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": ".",
   "main": "js/src/index.js",
   "scripts": {
